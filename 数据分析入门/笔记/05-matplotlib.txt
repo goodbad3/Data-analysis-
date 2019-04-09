@@ -1,0 +1,129 @@
+matplotlib的简单绘图-plot 
+*****************************************
+
+import numpy as np
+import matplotlib.pyplot as plt
+a = [1, 2, 3]
+b = [4, 5, 6]
+plt.plot(a, b)
+%matplotlib inline
+plt.plot(a, b)
+plt.plot(a, b)
+%timeit np.arange(10)
+plt.plot(a, b, '--')
+c = [10,8,6]
+d = [1,8,3]
+plt.plot(a,b, 'r--', c,d, 'b*')
+t = np.arange(0.0, 2.0, 0.1)
+t.size
+s = np.sin(t*np.pi)
+s.size
+plt.plot(t,s,'r--',label='aaaa')
+plt.plot(t*2, s, 'b--', label='bbbb')
+plt.xlabel('this is x')
+plt.ylabel('this is y')
+plt.title('this is a demo')
+plt.legend()
+*****************************************
+
+matplotlib简单绘图之subplot 
+
+import numpy as np
+import matplotlib.pyplot as plt
+x = np.linspace(0.0, 5.0)
+y1 = np.sin(np.pi*x)
+y2 = np.sin(np.pi*x*2)
+plt.plot(x, y1, 'b--', label='sin(pi*x)')
+plt.ylabel('y1 value')
+plt.plot(x, y2, 'r--', label='sin(pi*2x)')
+plt.ylabel('y2 value')
+plt.xlabel('x value')
+plt.title('this is x-y value')
+plt.legend()
+plt.show()
+plt.subplot(221)
+plt.plot(x, y1, 'b--')
+plt.ylabel('y1')
+plt.subplot(222)
+plt.plot(x, y2, 'r--')
+plt.ylabel('y2')
+plt.xlabel('x')
+plt.subplot(223)
+plt.plot(x, y1, 'r*')
+plt.subplot(224)
+plt.plot(x, y1, 'b*')
+figure, ax = plt.subplots(2,2)
+ax[0][0].plot(x, y1)
+ax[0][1].plot(x, y2)
+plt.show()
+*****************************************
+
+
+matplotlib里的直方图和密度图
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from pandas import Series, DataFrame
+s = Series(np.random.randn(1000))
+plt.hist(s, rwidth=0.9)
+a = np.arange(10)
+plt.hist(a,rwidth=0.9)
+plt.show()
+re = plt.hist(s, rwidth=0.9)
+len(re)
+re[0]
+re[1]
+re[2]
+plt.hist(s, rwidth=0.9,bins=20, color='r')
+plt.show()
+s.plot(kind='kde')
+*************************************
+
+Pandas绘图之DataFrame
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from pandas import Series, DataFrame
+df = DataFrame(
+    np.random.randint(1,10,40).reshape(10,4),
+    columns=['A','B','C','D']
+)
+df.plot(kind='bar')
+df.plot(kind='barh')
+plt.show()
+df.plot(kind='bar', stacked=True)
+df.plot(kind='area')
+a = df.iloc[5]
+type(a)
+df.iloc[5].plot()
+for i in df.index:
+    df.iloc[i].plot(label=str(i))
+plt.legend()
+plt.show()
+df['A'].plot()
+df.plot()
+plt.show()
+df.T.plot()
+plt.show()
+****************************************
+
+Pandas绘图之Series
+
+import numpy as np
+import pandas as pd
+from pandas import Series
+import matplotlib.pyplot as plt
+s1 = Series(np.random.randn(1000)).cumsum()
+s2 = Series(np.random.randn(1000)).cumsum()
+s1.plot(kind='line',grid=True, label='S1', title='This is Series')
+s2.plot(label='S2')
+plt.legend()
+fig, ax = plt.subplots(2,1)
+ax
+ax[0].plot(s1)
+ax[1].plot(s2)
+fig, ax = plt.subplots(2,1)
+s1[0:10].plot(ax=ax[0], label='S1', kind='bar')
+s2.plot(ax=ax[1], label='S2')

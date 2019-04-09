@@ -1,0 +1,79 @@
+2-1 数据科学领域5个常用Python库
+*********************************
+*********************************
+2-2 数学基础回顾之矩阵运算
+
+***************************
+2-3 Array的创建及访问.
+import numpy as np
+list_1 = [1, 2, 3, 4]
+array_1 = np.array(list_1)
+list_2 = [5, 6, 7, 8]
+array_2 = np.array([list_1, list_2])
+array_2.shape
+array_2.size
+array_2.dtype
+array_3 = np.array([[1.0,2,3],[4.0,5,6]])
+array_3.dtype
+array_4 = np.arange(1, 10, 2)
+array_4
+np.zeros(5)
+np.zeros([2,3])
+np.eye(5)
+np.eye(5).dtype
+a = np.arange(1,10)
+a[1]
+a[1:5]
+b = np.array([[1,2,3],[4,5,6]])
+b[1][0]
+b[1,0]
+c = np.array([[1,2,3],[4,5,6],[7,8,9]])
+c[:2,1:]
+********************************
+**********************************
+2-4 数组与矩阵运算.
+*********************************
+import numpy as np
+np.random.randn(10)
+np.random.randint(10, size=20).reshape(4, 5)
+a = np.random.randint(10, size=20).reshape(4, 5)
+b = np.random.randint(10, size=20).reshape(4, 5)
+a + b
+a - b
+a * b
+a / b
+np.mat([[1,2,3],[4,5,6]])
+np.mat(a)
+A = np.mat(a)
+B = np.mat(b)
+A + B
+A - B
+a = np.mat(np.random.randint(10, size=20).reshape(4, 5))
+b = np.mat(np.random.randint(10, size=20).reshape(5, 4))
+a * b
+a = np.random.randint(10, size=20).reshape(4, 5)
+np.unique(a)
+sum(a)#按列来，实际使用
+sum(a[0])
+sum(a[:,0])
+a.max()
+max(a[0])
+max(a[:,0])
+
+*********************************
+2-5 Array的input和output.
+*********************************
+import pickle
+import numpy as np
+x = np.arange(10)
+f = open('x.pkl', 'wb')
+pickle.dump(x, f)
+f = open('x.pkl', 'rb')
+pickle.load(f)
+np.save('one_array', x)
+np.load('one_array.npy')
+y = np.arange(20)
+np.savez('two_array.npz', a=x, b=y)
+c = np.load('two_array.npz')
+c['a']
+c['b']

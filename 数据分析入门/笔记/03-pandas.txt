@@ -1,0 +1,138 @@
+Dataframe IO 
+******************************
+import numpy as np
+import pandas as pd
+from pandas import Series, DataFrame
+import webbrowser
+link = 'http://pandas.pydata.org/pandas-docs/version/0.20/io.html'
+webbrowser.open(link)
+df1 = pd.read_clipboard()
+df1.to_clipboard()
+df1.to_csv('df1.csv', index=False)
+df2 = pd.read_csv('df1.csv')
+df1.to_json()
+pd.read_json(df1.to_json())
+df1.to_html('df1.html')
+df1.to_excel('df1.xlsx')
+***************************************
+Mapping和Replace 
+
+import numpy as np
+import pandas as pd
+from pandas import Series, DataFrame
+# create a dataframe
+df1 = DataFrame({"城市":["北京","上海","广州"], "人口":[1000,2000,1500]}, index=['A','B','C'])
+df1['GDP'] = Series([1000,2000,1500], index=['A','B','C'])
+s1 = Series(np.arange(10))
+s1.replace([1,2,3], [10,20,30])
+s1#s1还是原来的
+
+**************************************
+
+Reindexing Series and DataFrame 
+
+import numpy as np
+import pandas as pd
+from pandas import Series, DataFrame
+s1 = Series([1,2,3,4], index=['A','B','C','D'])
+s1.reindex(index=['A','B','C','D','E'])
+s1.reindex(index=['A','B','C','D','E'], fill_value=10)
+s2 = Series(['A','B','C'], index=[1,5,10])
+s2.reindex(index=range(15),method='ffill')
+
+df1 = DataFrame(np.random.rand(25).reshape([5,5]), index=['A','B','D','E','F'], columns=['c1','c2','c3','c4','c5'])
+df1.reindex(index=['A','B','C','D','E','F'])
+df1.reindex(columns=['c1','c2','c3','c4','c5','c6'])
+df1.reindex(index=['A','B','C','D','E','F'],columns=['c1','c2','c3','c4','c5','c6'])
+s1.reindex(index=['A','B'])
+df1.reindex(index=['A','B'])
+s1.drop('A')
+df1.drop('c1', axis=1)
+**************************************
+
+Selecting and Indexing 
+
+import numpy as np
+import pandas as pd
+from pandas import Series, DataFrame
+imdb = pd.read_csv('../homework/movie_metadata.csv')
+imdb.shape
+imdb.head()
+imdb[['color','director_name']]
+sub_df = imdb[['director_name', 'movie_title','imdb_score']]
+sub_df.head(5)
+tmp_df = sub_df.iloc[10:20,0:2]
+tmp_df
+tmp_df.iloc[2:4,:]
+imdb.head()
+tmp_df.loc[15:17,:'director_name']
+**************************************
+
+多级Index 
+
+import numpy as np
+import pandas as pd
+from pandas import Series, DataFrame
+s1 = Series(np.random.randn(6), index=[['1','1','1','2','2','2'],['a','b','c','a','b','c']])
+type(s1['1'])
+s1['1']['a']
+s1[:,'a']
+df1 = s1.unstack()
+df2 = DataFrame([s1['1'],s1['2']])
+s2 = df1.unstack()
+s2 = df1.T.unstack()
+df = DataFrame(np.arange(16).reshape(4,4), index=[['a','a','b','b'],[1,2,1,2]], columns=[['BJ','BJ','SH','GZ'],[8,9,8,8]])
+df['BJ'][8]
+****************************************
+
+深入理解Series和Dataframe 
+
+import numpy as np
+import pandas as pd
+from pandas import Series, DataFrame
+data = {
+    'Country': ['China', 'India', 'Brazil'],
+    'Capital': ['Beijing', 'New Delhi', 'Brasilia'],
+    'Population': ['1432732201', '1303171635', '207847528']
+}
+s1 = Series(data['Country'])
+s2 = Series(data['Capital'])
+s3 = Series(data['Population'])
+df = DataFrame(data)
+for row in df.iterrows():
+    print(row)
+for row in df.iterrows():
+    print(row[0], row[1])
+    break
+
+df_new = DataFrame([s1,s2,s3])
+df_new = DataFrame([s1,s2,s3], index=['Country','Capital', 'Population'])
+df_new.T
+*************************************
+
+谈一谈NaN 
+
+import numpy as np
+import pandas as pd
+from pandas import Series, DataFrame
+n = np.nan
+type(n)
+m = 1
+m + n
+s1 = Series([1, 2, np.nan, 3, 4], index=['A','B','C','D','E'])
+s1.isnull()
+s1.notnull()
+s1.dropna()
+dframe = DataFrame([[1,2,3],[np.nan,5,6],[7,np.nan,9],[np.nan,np.nan,np.nan]])
+dframe.isnull()
+dframe.notnull()
+df1 = dframe.dropna(axis=0,how='all')
+dframe.sum(axis=0)
+dframe2 = DataFrame([[1,2,3,np.nan],[2,np.nan,5,6],[np.nan,7,np.nan,9],[1,np.nan,np.nan,np.nan]])
+df2 = dframe2.dropna(thresh=2)
+dframe2.fillna(value={0:0,1:1,2:2,3:3})
+df1.dropna()
+df1.fillna(1)
+*************************************
+
+

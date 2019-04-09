@@ -1,0 +1,110 @@
+Concatenate和Combine 
+*********************************
+import numpy as np
+import pandas as pd
+from pandas import Series, DataFrame
+arr1 = np.arange(9).reshape(3,3)
+arr2 = np.arange(9).reshape(3,3)
+np.concatenate([arr1,arr2],axis=1)
+s1 = Series([1,2,3], index=['X','Y','Z'])
+s2 = Series([4,5], index=['A','B'])
+pd.concat([s1,s2])
+df1 = DataFrame(np.random.randn(4,3), columns=['X','Y','Z'])
+df2 = DataFrame(np.random.randn(3,3), columns=['X','Y','A'])
+pd.concat([df1,df2])
+s1 = Series([2, np.nan, 4, np.nan], index=['A','B','C','D'])
+s2 = Series([1,2,3,4], index=['A','B','C','D'])
+s1.combine_first(s2)
+df1 = DataFrame({
+    'X': [1, np.nan, 3, np.nan],
+    'Y': [5, np.nan, 7, np.nan],
+    'Z': [9, np.nan, 11,np.nan]
+})
+df2 = DataFrame({
+    'Z':[np.nan, 10, np.nan, 12],
+    'A':[1,2,3,4]
+})
+df1.combine_first(df2)
+**************************************
+
+DataFrame的merge操作 
+
+import pandas as pd
+import numpy as np
+from pandas import Series, DataFrame
+df1 = DataFrame({'key':['X','Y','Z','X'], 'data_set_1':[1,2,3,4]})
+df2 = DataFrame({'key':['X','B','C'], 'data_set_2':[4,5,6]})
+pd.merge(df1,df2,on=None)
+pd.merge(df1,df2, on='key',how='inner')
+pd.merge(df1, df2, on='key', how='left')
+pd.merge(df1,df2, on='key', how='right')
+pd.merge(df1,df2, on='key', how='outer')
+import webbrowser
+webbrowser.open('https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.merge.html')
+
+****************************************
+
+Series和DataFrame的排序 
+
+import numpy as np
+import pandas as pd
+from pandas import Series, DataFrame
+s1 = Series(np.random.randn(10))
+s1.values
+s1.index
+s2 = s1.sort_values(ascending=False)
+s2.sort_index()
+df1 = DataFrame(np.random.randn(40).reshape(8,5), columns=['A','B','C','D','E'])
+df1['A'].sort_values()
+df2 = df1.sort_values('A')
+df2.sort_index()
+df_results = pd.read_csv('imdb.csv')
+
+**************************************
+
+Series和DataFrame的简单数学运算
+
+import numpy as np
+import pandas as pd
+from pandas import Series, DataFrame
+s1 = Series([1,2,3], index=['A','B','C'])
+s1
+s2 = Series([4,5,6,7], index=['B','C','D','E'])
+s2
+s1 + s2
+df1 = DataFrame(np.arange(4).reshape(2,2), index=['A','B'], columns=['BJ','SH'])
+df2 = DataFrame(np.arange(9).reshape(3,3), index=['A','B','C'], columns=['BJ','SH','GZ'])
+df3 = DataFrame([[1,2,3],[4,5,np.nan],[7,8,9]],index=['A','B','C'],columns=['c1','c2','c3'])
+df3.sum()
+df3.sum(axis=1)
+df3.min()
+df3.max()
+df3.describe()
+****************************************
+
+import numpy as np
+import pandas as pd
+from pandas import Series, DataFrame
+df = pd.read_csv('http://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv', sep=';')
+df.head()
+df['quality'].unique()
+df = pd.read_csv('../homework/usa_flights.csv')
+df.shape
+df.head()
+df['delayed'] = df['arr_delay'].apply(lambda x: x>0)
+df.head()
+group_by_carrier = df.groupby(['unique_carrier','delayed'])
+group_by_carrier.get_group(('AA', True))
+group_by_carrier.size()
+%matplotlib inline
+count_delays_by_carrier = group_by_carrier.size().unstack()
+count_delays_by_carrier.plot(kind='barh', stacked=True, figsize=[16,6], colormap='winter')
+df.shape
+df = pd.read_excel('../homework/sales-funnel.xlsx')
+pd.pivot_table(df,index=["Name"])
+df.head()
+df_pivot = pd.pivot_table(df,index=["Name"])
+df_pivot
+pd.pivot_table(df, index=['Manager','Rep'], values=['Price'],aggfunc=[sum,np.mean])
+********************************************
+
